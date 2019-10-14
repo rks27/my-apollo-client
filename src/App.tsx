@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Post from "./components/Post";
+import Posts from "./components/Posts";
+import TogglePortal from "./components/TogglePortal";
+
+const client = new ApolloClient({
+  uri: "https://api-uswest.graphcms.com/v1/ck1jzecws1jme01e9fjvi3cun/master"
+});
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <div>Graph QL using Query</div>
+        <Switch>
+          <Route path="/post/:id" component={Post} />
+          <Route path="/posts" component={Posts} />
+          <Route path="/" component={Posts} />
+          <Route path="/Toggle" component={TogglePortal} />
+        </Switch>
+
+        <div>
+          <br />
+          <br />
+          ------------------------------- This is main footer-----------
+        </div>
+      </Router>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;

@@ -1,9 +1,16 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
 export default class PostForm extends Component<any> {
+  static propTypes = {
+    mutationPromise: PropTypes.func.isRequired,
+    post: PropTypes.object
+  };
   state: any = {
-    title: "",
-    body: ""
+    id: this.props.post ? this.props.post.id || "" : "",
+    title: this.props.post ? this.props.post.title || "" : "",
+    body: this.props.post ? this.props.post.body || "" : ""
   };
 
   handleOnChange = (e: any) => {
@@ -14,19 +21,23 @@ export default class PostForm extends Component<any> {
   };
 
   render() {
-    const { title, body } = this.state;
-    const { createPost } = this.props;
+    const { title, body, id } = this.state;
+    const { mutationPromise, history } = this.props;
     return (
       <form
         onSubmit={e => {
           e.preventDefault();
-          createPost({
+          mutationPromise({
             variables: {
               title,
-              body
+              body,
+              id
             }
           })
-            .then(() => this.setState({ body: "", title: "" }))
+            .then(() => {
+              console.log("should redirect");
+              return <Redirect to="/" />;
+            })
             .catch((e: any) => console.log(e));
         }}
       >

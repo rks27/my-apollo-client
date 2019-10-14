@@ -17,7 +17,9 @@ export default class NewPost extends Component {
   render() {
     return (
       <Mutation mutation={MUTATION_QUERY}>
-        {(createPost: any) => <PostForm createPost={createPost}></PostForm>}
+        {(createPost: any) => (
+          <PostForm mutationPromise={createPost}></PostForm>
+        )}
       </Mutation>
     );
   }

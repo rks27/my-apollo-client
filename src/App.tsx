@@ -18,7 +18,10 @@ const App: React.FC = () => {
       <Router>
         <div>Graph QL using Query</div>
         <div>
-          <Link to="/post/new">New post</Link>
+          <Link to="/post/new">New post</Link> <br />
+          <Link to="/">Home</Link>
+          <br></br>
+          <br />
         </div>
         <Switch>
           <Route path="/post/new" component={NewPost} />
